@@ -1,8 +1,10 @@
-# Cypress Generator NPM Package
+# 🚀 Cypress Test Generator
 
-🚀 **AI-Powered Cypress Test Generator** - Generate comprehensive Cypress test scripts for any website instantly with AI assistance.
+**AI-Powered Cypress Test Generation for Any Website**
 
-## Features
+Generate comprehensive Cypress test scripts for any website instantly with AI assistance. This tool combines Flask backend with Playwright web crawling and OpenAI integration to create robust, maintainable test suites.
+
+## ✨ Features
 
 - 🤖 **AI-Enhanced Test Generation** - Uses OpenAI to suggest optimal selectors and test strategies
 - 🌐 **Web Crawling** - Automatically crawls websites using Playwright
@@ -12,53 +14,73 @@
 - 🔧 **Livewire Support** - Special support for Laravel Livewire applications
 - 📁 **Fixture Generation** - Creates test data fixtures automatically
 
-## Installation
+## 🛠️ Installation
 
 ### Prerequisites
 
-- Node.js (v14 or higher)
 - Python 3.8+
+- Node.js 14+
 - npm or yarn
 
-### Quick Start
+### Quick Start (Recommended)
 
-1. **Clone and install:**
+**Option 1: Install globally via NPM (Easiest)**
+```bash
+# Install the package globally
+npm install -g cypress-generator
+
+# Install Python dependencies (run once)
+pip install flask playwright openai python-dotenv
+playwright install
+
+# Set your OpenAI API key
+export OPENAI_API_KEY=your_api_key_here
+
+# Start the generator
+cypress-generator
+```
+
+**Option 2: Install locally in your project**
+```bash
+# Install the package in your project
+npm install cypress-generator
+
+# Install Python dependencies
+npm run install-deps
+
+# Set your OpenAI API key
+export OPENAI_API_KEY=your_api_key_here
+
+# Start the generator
+npx cypress-generator
+```
+
+## 🚀 Usage
+
+### Web Interface
+
+1. **Start the server:**
    ```bash
-   git clone <your-repo>
-   cd cypress-generator-npm
-   npm install
+   cypress-generator
+   # or
+   npx cypress-generator
    ```
 
-2. **Install Python dependencies:**
-   ```bash
-   npm run install-deps
-   ```
-
-3. **Set up environment variables:**
-   ```bash
-   cp .env.example .env
-   # Edit .env with your OpenAI API key
-   ```
-
-4. **Start the services:**
-   ```bash
-   # Terminal 1: Start Flask backend
-   npm run dev
-   
-   # Terminal 2: Start Node.js frontend
-   npm start
-   ```
-
-## Usage
+2. **Open your browser:**
+   - Go to `http://localhost:5000`
+   - Enter a website URL (e.g., `https://example.com`)
+   - Click "Generate Cypress Tests"
+   - View and download generated test files
 
 ### CLI Usage
 
 ```bash
-# Start the Flask server
-npx cypress-generator
+# Install globally and run
+npm install -g cypress-generator
+cypress-generator
 
-# Or use the npm script
-npm run dev
+# Or use npx
+npx cypress-generator
 ```
 
 ### API Usage
@@ -178,10 +200,11 @@ cypress-generator-npm/
 ### Available Scripts
 
 ```bash
-npm start          # Start Node.js server
-npm run dev        # Start Flask backend
-npm run install-deps # Install Python dependencies
-npm test           # Run tests (when implemented)
+npm start                    # Start Node.js server
+npm run install-deps        # Install Python dependencies
+npm run install-dependencies # Alternative script name
+npm run setup               # Setup script (same as install-deps)
+cypress-generator           # Start the Flask server directly
 ```
 
 ### Adding New Features
@@ -190,39 +213,55 @@ npm test           # Run tests (when implemented)
 2. **AI Enhancements**: Modify `get_ai_suggestions()` function
 3. **Selector Strategies**: Update `get_best_selector()` function
 
-## Troubleshooting
+## 🐛 Troubleshooting
 
 ### Common Issues
 
-1. **Flask server won't start:**
+1. **"ModuleNotFoundError: No module named 'dotenv'"**
    ```bash
-   # Check Python virtual environment
-   source ../npm/bin/activate
-   pip list
-   
-   # Reinstall dependencies
-   npm run install-deps
-   ```
-
-2. **Playwright browser issues:**
-   ```bash
-   # Install browsers
-   source ../npm/bin/activate
+   # Install missing Python dependencies
+   pip install flask playwright openai python-dotenv
    playwright install
    ```
 
-3. **OpenAI API errors:**
-   - Check your API key in `.env`
+2. **"Missing script: install-deps"**
+   ```bash
+   # Use the correct script name
+   npm run install-dependencies
+   # or
+   npm run setup
+   ```
+
+3. **Flask server won't start:**
+   ```bash
+   # Check Python installation
+   python3 --version
+   
+   # Install dependencies manually
+   pip install flask playwright openai python-dotenv
+   playwright install
+   ```
+
+4. **Playwright browser issues:**
+   ```bash
+   # Install browsers
+   playwright install
+   ```
+
+5. **OpenAI API errors:**
+   - Set your API key: `export OPENAI_API_KEY=your_key_here`
    - Verify API key has sufficient credits
    - Check rate limits
 
-### Debug Mode
-
-Enable debug logging:
+### Quick Fix Commands
 
 ```bash
-export FLASK_DEBUG=True
-npm run dev
+# Complete setup from scratch
+npm install -g cypress-generator
+pip install flask playwright openai python-dotenv
+playwright install
+export OPENAI_API_KEY=your_key_here
+cypress-generator
 ```
 
 ## Contributing
