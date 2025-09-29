@@ -16,42 +16,85 @@
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Source Code Pro', monospace;
             line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #d4d4d4;
+            background: #1e1e1e;
             min-height: 100vh;
+            overflow-x: hidden;
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 1rem;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 1rem;
+            min-height: 100vh;
         }
         
-        .header {
-            text-align: center;
-            color: white;
-            margin-bottom: 3rem;
+        .sidebar {
+            background: #252526;
+            border-radius: 8px;
+            padding: 1.5rem;
+            border: 1px solid #3c3c3c;
+            height: fit-content;
+            position: sticky;
+            top: 1rem;
         }
         
-        .header h1 {
-            font-size: 3rem;
+        .sidebar h2 {
+            color: #569cd6;
+            font-size: 1.1rem;
             margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-weight: 600;
         }
         
-        .header p {
+        .sidebar-item {
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            background: #2d2d30;
+            border-radius: 4px;
+            border-left: 3px solid #007acc;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .sidebar-item:hover {
+            background: #3c3c3c;
+            border-left-color: #569cd6;
+        }
+        
+        .sidebar-item.active {
+            background: #094771;
+            border-left-color: #007acc;
+        }
+        
+        .main-panel {
+            background: #1e1e1e;
+            border-radius: 8px;
+            border: 1px solid #3c3c3c;
+            overflow: hidden;
+        }
+        
+        .panel-header {
+            background: #2d2d30;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #3c3c3c;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .panel-title {
+            color: #d4d4d4;
             font-size: 1.2rem;
-            opacity: 0.9;
+            font-weight: 600;
         }
         
-        .main-content {
-            background: white;
-            border-radius: 15px;
+        .panel-content {
             padding: 2rem;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            margin-bottom: 2rem;
         }
         
         .form-group {
@@ -62,44 +105,57 @@
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 600;
-            color: #555;
+            color: #569cd6;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         
         input[type="url"] {
             width: 100%;
-            padding: 1rem;
-            border: 2px solid #e1e5e9;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
+            padding: 0.75rem 1rem;
+            background: #2d2d30;
+            border: 1px solid #3c3c3c;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: #d4d4d4;
+            font-family: inherit;
+            transition: all 0.2s ease;
         }
         
         input[type="url"]:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            border-color: #007acc;
+            box-shadow: 0 0 0 2px rgba(0, 122, 204, 0.2);
+        }
+        
+        input[type="url"]::placeholder {
+            color: #6a6a6a;
         }
         
         .btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: #007acc;
+            color: #ffffff;
             border: none;
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            font-size: 1rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
             font-weight: 600;
             cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: all 0.2s ease;
             width: 100%;
+            font-family: inherit;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         
         .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+            background: #005a9e;
+            transform: translateY(-1px);
         }
         
         .btn:disabled {
-            opacity: 0.6;
+            opacity: 0.5;
             cursor: not-allowed;
             transform: none;
         }
@@ -107,14 +163,39 @@
         .result {
             margin-top: 2rem;
             padding: 1.5rem;
-            background: #f8f9fa;
-            border-radius: 8px;
-            border-left: 4px solid #28a745;
+            background: #2d2d30;
+            border-radius: 4px;
+            border-left: 4px solid #4ec9b0;
+            border: 1px solid #3c3c3c;
+        }
+        
+        .result h3 {
+            color: #4ec9b0;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .result p {
+            color: #d4d4d4;
+            margin-bottom: 0.5rem;
+        }
+        
+        .result ul {
+            color: #d4d4d4;
+            margin-left: 1rem;
+        }
+        
+        .result li {
+            margin-bottom: 0.25rem;
         }
         
         .error {
-            border-left-color: #dc3545;
-            background: #f8d7da;
+            border-left-color: #f44747;
+            background: #2d1b1b;
+        }
+        
+        .error h3 {
+            color: #f44747;
         }
         
         .loading {
@@ -123,11 +204,11 @@
         }
         
         .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #667eea;
+            border: 3px solid #3c3c3c;
+            border-top: 3px solid #007acc;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: 30px;
+            height: 30px;
             animation: spin 1s linear infinite;
             margin: 0 auto 1rem;
         }
@@ -139,95 +220,237 @@
         
         .features {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
             margin-top: 2rem;
         }
         
         .feature {
-            background: white;
+            background: #2d2d30;
             padding: 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            text-align: center;
+            border-radius: 4px;
+            border: 1px solid #3c3c3c;
+            transition: all 0.2s ease;
+        }
+        
+        .feature:hover {
+            background: #3c3c3c;
+            border-color: #007acc;
         }
         
         .feature h3 {
-            color: #667eea;
+            color: #569cd6;
             margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+        
+        .feature p {
+            color: #d4d4d4;
+            font-size: 0.9rem;
+            line-height: 1.5;
         }
         
         .api-info {
-            background: #e9ecef;
+            background: #2d2d30;
             padding: 1.5rem;
-            border-radius: 8px;
+            border-radius: 4px;
+            border: 1px solid #3c3c3c;
             margin-top: 2rem;
         }
         
         .api-info h3 {
-            color: #495057;
+            color: #569cd6;
             margin-bottom: 1rem;
+            font-size: 1.1rem;
         }
         
         .api-endpoint {
-            background: #f8f9fa;
-            padding: 0.5rem 1rem;
+            background: #1e1e1e;
+            padding: 0.75rem 1rem;
             border-radius: 4px;
-            font-family: 'Courier New', monospace;
+            font-family: inherit;
             margin: 0.5rem 0;
-            border-left: 3px solid #667eea;
+            border-left: 3px solid #007acc;
+            color: #d4d4d4;
+            font-size: 0.9rem;
+        }
+        
+        .status-bar {
+            background: #007acc;
+            color: #ffffff;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4ec9b0;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+            
+            .sidebar {
+                position: static;
+                order: 2;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>🚀 Cypress Test Generator</h1>
-            <p>AI-Powered Cypress Test Generation for Any Website</p>
+        <div class="sidebar">
+            <h2>Explorer</h2>
+            <div class="sidebar-item active" data-panel="generator">
+                <span>🚀 Test Generator</span>
+            </div>
+            <div class="sidebar-item" data-panel="features">
+                <span>⚡ Features</span>
+            </div>
+            <div class="sidebar-item" data-panel="api">
+                <span>📡 API Reference</span>
+            </div>
+            <div class="sidebar-item" data-panel="about">
+                <span>ℹ️ About</span>
+            </div>
         </div>
         
-        <div class="main-content">
-            <form id="testForm">
-                <div class="form-group">
-                    <label for="url">Website URL:</label>
-                    <input type="url" id="url" name="url" placeholder="https://example.com" required>
-                </div>
-                <button type="submit" class="btn" id="generateBtn">
-                    Generate Cypress Tests
-                </button>
-            </form>
+        <div class="main-panel">
+            <div class="panel-header">
+                <div class="panel-title">Cypress Test Generator</div>
+            </div>
             
-            <div id="result" style="display: none;"></div>
-        </div>
-        
-        <div class="features">
-            <div class="feature">
-                <h3>🤖 AI-Powered</h3>
-                <p>Uses OpenAI to suggest optimal selectors and test strategies</p>
+            <div class="panel-content">
+                <!-- Generator Panel -->
+                <div id="generator-panel" class="panel-section">
+                    <form id="testForm">
+                        <div class="form-group">
+                            <label for="url">Website URL</label>
+                            <input type="url" id="url" name="url" placeholder="https://example.com" required>
+                        </div>
+                        <button type="submit" class="btn" id="generateBtn">
+                            Generate Cypress Tests
+                        </button>
+                    </form>
+                    
+                    <div id="result" style="display: none;"></div>
+                </div>
+                
+                <!-- Features Panel -->
+                <div id="features-panel" class="panel-section" style="display: none;">
+                    <div class="features">
+                        <div class="feature">
+                            <h3>🤖 AI-Powered</h3>
+                            <p>Uses OpenAI to suggest optimal selectors and test strategies</p>
+                        </div>
+                        <div class="feature">
+                            <h3>🌐 Web Crawling</h3>
+                            <p>Automatically crawls websites using Playwright</p>
+                        </div>
+                        <div class="feature">
+                            <h3>📝 Multiple Test Types</h3>
+                            <p>Generates smoke tests, E2E tests, authentication tests</p>
+                        </div>
+                        <div class="feature">
+                            <h3>🎯 Smart Selectors</h3>
+                            <p>Prioritizes data-testid, data-cy, and other stable selectors</p>
+                        </div>
+                        <div class="feature">
+                            <h3>📊 Page Object Model</h3>
+                            <p>Generates maintainable page object classes</p>
+                        </div>
+                        <div class="feature">
+                            <h3>🔧 Livewire Support</h3>
+                            <p>Special support for Laravel Livewire applications</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- API Panel -->
+                <div id="api-panel" class="panel-section" style="display: none;">
+                    <div class="api-info">
+                        <h3>📡 API Endpoints</h3>
+                        <div class="api-endpoint">POST /api/generate - Generate Cypress tests for a URL</div>
+                        <div class="api-endpoint">GET /api/test_types - Get available test types</div>
+                        <div class="api-endpoint">POST /api/ask-ai - Ask AI questions about Thirlo's CV</div>
+                    </div>
+                </div>
+                
+                <!-- About Panel -->
+                <div id="about-panel" class="panel-section" style="display: none;">
+                    <div class="api-info">
+                        <h3>👨‍💻 About</h3>
+                        <p><strong>Author:</strong> Thirlo Fredericks - QA Engineer</p>
+                        <p><strong>Experience:</strong> Cypress, Selenium, and Laravel/Livewire</p>
+                        <p><strong>Certification:</strong> Certified Software Tester (CSTE)</p>
+                        <p><strong>Achievement:</strong> 30% defect reduction through automated testing</p>
+                        <br>
+                        <p><strong>Repository:</strong> <a href="https://github.com/Thirlo401/cypress-generator" style="color: #569cd6;">GitHub</a></p>
+                        <p><strong>NPM Package:</strong> <a href="https://www.npmjs.com/package/cypress-generator" style="color: #569cd6;">npm</a></p>
+                    </div>
+                </div>
             </div>
-            <div class="feature">
-                <h3>🌐 Web Crawling</h3>
-                <p>Automatically crawls websites using Playwright</p>
+            
+            <div class="status-bar">
+                <div class="status-item">
+                    <div class="status-dot"></div>
+                    <span>Ready</span>
+                </div>
+                <div class="status-item">
+                    <span>v1.0.5</span>
+                </div>
             </div>
-            <div class="feature">
-                <h3>📝 Multiple Test Types</h3>
-                <p>Generates smoke tests, E2E tests, authentication tests</p>
-            </div>
-            <div class="feature">
-                <h3>🎯 Smart Selectors</h3>
-                <p>Prioritizes data-testid, data-cy, and other stable selectors</p>
-            </div>
-        </div>
-        
-        <div class="api-info">
-            <h3>📡 API Endpoints</h3>
-            <div class="api-endpoint">POST /api/generate - Generate Cypress tests for a URL</div>
-            <div class="api-endpoint">GET /api/test_types - Get available test types</div>
-            <div class="api-endpoint">POST /api/ask-ai - Ask AI questions about Thirlo's CV</div>
         </div>
     </div>
 
     <script>
+        // Sidebar navigation
+        document.querySelectorAll('.sidebar-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const panel = this.getAttribute('data-panel');
+                
+                // Update active state
+                document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Show/hide panels
+                document.querySelectorAll('.panel-section').forEach(p => p.style.display = 'none');
+                document.getElementById(panel + '-panel').style.display = 'block';
+                
+                // Update status bar
+                const statusText = document.querySelector('.status-item span');
+                switch(panel) {
+                    case 'generator':
+                        statusText.textContent = 'Ready';
+                        break;
+                    case 'features':
+                        statusText.textContent = 'Features';
+                        break;
+                    case 'api':
+                        statusText.textContent = 'API Reference';
+                        break;
+                    case 'about':
+                        statusText.textContent = 'About';
+                        break;
+                }
+            });
+        });
+        
+        // Form submission
         document.getElementById('testForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
@@ -245,6 +468,10 @@
                     <p>Analyzing website and generating Cypress tests...</p>
                 </div>
             `;
+            
+            // Update status
+            const statusText = document.querySelector('.status-item span');
+            statusText.textContent = 'Processing...';
             
             try {
                 const response = await fetch('/api/generate', {
@@ -272,6 +499,7 @@
                             <p><strong>AI Enhanced:</strong> ${data.ai_enhanced ? 'Yes' : 'No'}</p>
                         </div>
                     `;
+                    statusText.textContent = 'Success';
                 } else {
                     result.innerHTML = `
                         <div class="result error">
@@ -279,6 +507,7 @@
                             <p>${data.error}</p>
                         </div>
                     `;
+                    statusText.textContent = 'Error';
                 }
             } catch (error) {
                 result.innerHTML = `
@@ -287,10 +516,41 @@
                         <p>Failed to connect to the server. Make sure the Flask backend is running.</p>
                     </div>
                 `;
+                statusText.textContent = 'Connection Error';
             } finally {
                 generateBtn.disabled = false;
                 generateBtn.textContent = 'Generate Cypress Tests';
+                
+                // Reset status after 3 seconds
+                setTimeout(() => {
+                    statusText.textContent = 'Ready';
+                }, 3000);
             }
+        });
+        
+        // Add some IDE-like keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Ctrl/Cmd + 1-4 for panel switching
+            if ((e.ctrlKey || e.metaKey) && e.key >= '1' && e.key <= '4') {
+                e.preventDefault();
+                const panels = ['generator', 'features', 'api', 'about'];
+                const panelIndex = parseInt(e.key) - 1;
+                const panel = panels[panelIndex];
+                
+                if (panel) {
+                    document.querySelector(`[data-panel="${panel}"]`).click();
+                }
+            }
+            
+            // Escape to focus URL input
+            if (e.key === 'Escape') {
+                document.getElementById('url').focus();
+            }
+        });
+        
+        // Focus URL input on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('url').focus();
         });
     </script>
 </body>
