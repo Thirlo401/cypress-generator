@@ -26,7 +26,7 @@ Generate comprehensive Cypress test scripts for any website instantly with AI as
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/cypress-generator.git
+   git clone https://github.com/Thirlo401/cypress-generator.git
    cd cypress-generator
    ```
 
@@ -269,4 +269,4 @@ For issues and questions:
 
 **Happy Testing! 🧪✨**
 
-Made with ❤️ by [Thirlo](https://github.com/yourusername)
+Made with ❤️ by [Thirlo](https://github.com/Thirlo401)
