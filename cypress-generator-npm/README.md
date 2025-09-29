@@ -26,17 +26,17 @@ Generate comprehensive Cypress test scripts for any website instantly with AI as
 
 **Option 1: Install globally via NPM (Easiest)**
 ```bash
-# Install the package globally
+# Step 1: Install the package globally
 npm install -g cypress-generator
 
-# Install Python dependencies (run once)
+# Step 2: Install Python dependencies (run once)
 pip install flask playwright openai python-dotenv
 playwright install
 
-# Set your OpenAI API key
+# Step 3: Set your OpenAI API key
 export OPENAI_API_KEY=your_api_key_here
 
-# Start the generator
+# Step 4: Start the generator
 cypress-generator
 ```
 
@@ -224,7 +224,15 @@ cypress-generator           # Start the Flask server directly
    playwright install
    ```
 
-2. **"Missing script: install-deps"**
+2. **"zsh: command not found: pip"**
+   ```bash
+   # Try pip3 instead
+   pip3 install flask playwright openai python-dotenv
+   # or install pip first
+   python3 -m ensurepip --upgrade
+   ```
+
+3. **"Missing script: install-deps"**
    ```bash
    # Use the correct script name
    npm run install-dependencies
@@ -232,7 +240,7 @@ cypress-generator           # Start the Flask server directly
    npm run setup
    ```
 
-3. **Flask server won't start:**
+4. **Flask server won't start:**
    ```bash
    # Check Python installation
    python3 --version
@@ -262,6 +270,18 @@ pip install flask playwright openai python-dotenv
 playwright install
 export OPENAI_API_KEY=your_key_here
 cypress-generator
+```
+
+### If You Get "zsh: command not found: pip"
+
+```bash
+# Try these alternatives:
+pip3 install flask playwright openai python-dotenv
+# or
+python3 -m pip install flask playwright openai python-dotenv
+# or
+python3 -m ensurepip --upgrade
+pip install flask playwright openai python-dotenv
 ```
 
 ## Contributing

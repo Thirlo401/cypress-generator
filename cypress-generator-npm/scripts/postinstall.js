@@ -14,9 +14,21 @@ const pythonCheck = spawnSync(pythonCmd, ["--version"], { stdio: "pipe" });
 if (pythonCheck.error) {
   console.log("⚠️  Python not found. Please install Python 3.8+ to use this package.");
   console.log("   You can install dependencies manually:");
-  console.log("   pip install flask playwright openai");
+  console.log("   pip install flask playwright openai python-dotenv");
   console.log("   playwright install");
   process.exit(0);
+}
+
+// Check if pip is available
+const pipCheck = spawnSync(pythonCmd, ["-m", "pip", "--version"], { stdio: "pipe" });
+if (pipCheck.error) {
+  console.log("⚠️  pip not found. Trying to install pip...");
+  const pipInstall = spawnSync(pythonCmd, ["-m", "ensurepip", "--upgrade"], { stdio: "inherit" });
+  if (pipInstall.error) {
+    console.log("❌ Failed to install pip. Please install Python with pip manually.");
+    console.log("   Then run: pip install flask playwright openai python-dotenv");
+    process.exit(1);
+  }
 }
 
 console.log("✅ Python found:", pythonCheck.stdout.toString().trim());
@@ -35,6 +47,7 @@ if (fs.existsSync(requirements)) {
     console.log("   Please install manually:");
     console.log("   pip install flask playwright openai python-dotenv");
     console.log("   playwright install");
+    console.log("   If 'pip' command not found, try 'pip3' or 'python3 -m pip'");
   } else {
     console.log("✅ Python dependencies installed successfully!");
   }
