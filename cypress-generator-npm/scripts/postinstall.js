@@ -30,10 +30,27 @@ if (fs.existsSync(requirements)) {
     stdio: "inherit"
   });
   
-  if (installResult.error) {
+  if (installResult.error || installResult.status !== 0) {
     console.log("⚠️  Failed to install Python dependencies automatically.");
-    console.log("   Please install manually: pip install flask playwright openai");
+    console.log("   Please install manually:");
+    console.log("   pip install flask playwright openai python-dotenv");
+    console.log("   playwright install");
+  } else {
+    console.log("✅ Python dependencies installed successfully!");
   }
+} else {
+  console.log("⚠️  requirements.txt not found. Installing core dependencies...");
+  const coreDeps = ["flask", "playwright", "openai", "python-dotenv"];
+  coreDeps.forEach(dep => {
+    console.log(`📦 Installing ${dep}...`);
+    const result = spawnSync(pythonCmd, ["-m", "pip", "install", dep], {
+      cwd: projectRoot,
+      stdio: "inherit"
+    });
+    if (result.error || result.status !== 0) {
+      console.log(`⚠️  Failed to install ${dep}`);
+    }
+  });
 }
 
 // Install Playwright browsers
