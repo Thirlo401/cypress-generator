@@ -302,14 +302,15 @@
         .code-viewer {
             background: #1e1e1e;
             border: 1px solid #3c3c3c;
-            border-radius: 4px;
-            margin-top: 1rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
             overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
         
         .code-header {
-            background: #2d2d30;
-            padding: 0.75rem 1rem;
+            background: linear-gradient(135deg, #2d2d30 0%, #3c3c3c 100%);
+            padding: 1rem 1.5rem;
             border-bottom: 1px solid #3c3c3c;
             display: flex;
             justify-content: space-between;
@@ -318,29 +319,43 @@
         
         .code-title {
             color: #d4d4d4;
-            font-size: 0.9rem;
+            font-size: 1rem;
             font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .code-title::before {
+            content: "📁";
+            font-size: 1.2rem;
         }
         
         .code-actions {
             display: flex;
-            gap: 0.5rem;
+            gap: 0.75rem;
         }
         
         .code-btn {
             background: #007acc;
             color: #ffffff;
             border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            font-size: 0.8rem;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
             cursor: pointer;
             transition: all 0.2s ease;
             font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
         
         .code-btn:hover {
             background: #005a9e;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0, 122, 204, 0.3);
         }
         
         .code-btn.secondary {
@@ -350,18 +365,19 @@
         
         .code-btn.secondary:hover {
             background: #4a4a4a;
+            transform: translateY(-1px);
         }
         
         .code-content {
             background: #1e1e1e;
-            padding: 1rem;
-            overflow-x: auto;
+            padding: 0;
+            overflow: hidden;
             font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Source Code Pro', monospace;
-            font-size: 0.85rem;
-            line-height: 1.5;
+            font-size: 0.9rem;
+            line-height: 1.6;
             color: #d4d4d4;
-            white-space: pre-wrap;
-            word-wrap: break-word;
+            max-height: 500px;
+            overflow-y: auto;
         }
         
         .code-content .keyword {
@@ -392,10 +408,11 @@
             display: flex;
             background: #2d2d30;
             border-bottom: 1px solid #3c3c3c;
+            overflow-x: auto;
         }
         
         .code-tab {
-            padding: 0.75rem 1rem;
+            padding: 0.8rem 1.2rem;
             background: #2d2d30;
             border: none;
             color: #d4d4d4;
@@ -403,51 +420,90 @@
             font-size: 0.85rem;
             border-right: 1px solid #3c3c3c;
             transition: all 0.2s ease;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            min-width: 120px;
         }
         
         .code-tab.active {
             background: #1e1e1e;
             color: #ffffff;
+            border-bottom: 2px solid #007acc;
         }
         
         .code-tab:hover {
             background: #3c3c3c;
         }
         
+        .code-tab::before {
+            content: "📄";
+            font-size: 0.9rem;
+        }
+        
         .file-tree {
             background: #252526;
             border-right: 1px solid #3c3c3c;
             padding: 1rem;
-            min-width: 200px;
+            min-width: 220px;
+            max-width: 300px;
+        }
+        
+        .file-tree h3 {
+            color: #569cd6;
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         
         .file-item {
-            padding: 0.5rem;
+            padding: 0.6rem 0.8rem;
             cursor: pointer;
-            border-radius: 4px;
-            margin-bottom: 0.25rem;
+            border-radius: 6px;
+            margin-bottom: 0.3rem;
             transition: all 0.2s ease;
             color: #d4d4d4;
             font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
         
         .file-item:hover {
             background: #3c3c3c;
+            transform: translateX(2px);
         }
         
         .file-item.active {
             background: #094771;
             color: #ffffff;
+            border-left: 3px solid #007acc;
         }
         
         .file-icon {
-            margin-right: 0.5rem;
+            font-size: 1rem;
         }
         
         .code-panel {
             display: grid;
-            grid-template-columns: 200px 1fr;
-            min-height: 400px;
+            grid-template-columns: 220px 1fr;
+            min-height: 500px;
+            max-height: 600px;
+        }
+        
+        .code-editor {
+            background: #1e1e1e;
+            border: none;
+            padding: 1.5rem;
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Source Code Pro', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #d4d4d4;
+            overflow: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
         }
         
         .toast {
@@ -540,13 +596,14 @@
                         <div class="code-header">
                             <div class="code-title">Generated Test Files</div>
                             <div class="code-actions">
-                                <button class="code-btn secondary" id="copyAllBtn">Copy All</button>
-                                <button class="code-btn" id="downloadAllBtn">Download All</button>
+                                <button class="code-btn secondary" id="copyAllBtn">📋 Copy All Files</button>
+                                <button class="code-btn" id="downloadAllBtn">💾 Download All Files</button>
                             </div>
                         </div>
                         
                         <div class="code-panel">
                             <div class="file-tree" id="file-tree">
+                                <h3>📁 Generated Files</h3>
                                 <!-- Files will be populated here -->
                             </div>
                             
@@ -554,7 +611,7 @@
                                 <div class="code-tabs" id="code-tabs">
                                     <!-- Tabs will be populated here -->
                                 </div>
-                                <div class="code-content" id="code-content">
+                                <div class="code-editor" id="code-content">
                                     <!-- Code will be displayed here -->
                                 </div>
                             </div>
@@ -717,17 +774,12 @@
                     statusText.textContent = 'Success';
                     
                     // Display code viewer with generated files
-                    if (data.generated_files) {
-                        displayCodeViewer(data.generated_files);
-                    } else {
-                        // Fallback: create mock files for demonstration
-                        const mockFiles = {
-                            [data.filename]: data.test_content || '// Generated test content would appear here',
-                            [data.page_filename]: data.page_content || '// Generated page object would appear here',
-                            [data.fixture_filename]: data.fixture_content || '// Generated fixtures would appear here'
-                        };
-                        displayCodeViewer(mockFiles);
-                    }
+                    const generatedFiles = {
+                        [data.filename]: data.script,
+                        [data.page_filename]: data.page_object,
+                        [data.fixture_filename]: JSON.stringify(data.fixture, null, 2)
+                    };
+                    displayCodeViewer(generatedFiles);
                 } else {
                     result.innerHTML = `
                         <div class="result error">
@@ -896,18 +948,19 @@
             // Populate file tree and tabs
             Object.keys(files).forEach((filename, index) => {
                 const isActive = index === 0;
+                const fileIcon = getFileIcon(filename);
                 
                 // File tree item
                 const fileItem = document.createElement('div');
                 fileItem.className = `file-item ${isActive ? 'active' : ''}`;
-                fileItem.innerHTML = `<span class="file-icon">📄</span>${filename}`;
+                fileItem.innerHTML = `<span class="file-icon">${fileIcon}</span><span>${filename}</span>`;
                 fileItem.addEventListener('click', () => switchToFile(filename));
                 fileTree.appendChild(fileItem);
                 
                 // Tab
                 const tab = document.createElement('button');
                 tab.className = `code-tab ${isActive ? 'active' : ''}`;
-                tab.textContent = filename;
+                tab.innerHTML = `<span>${fileIcon}</span><span>${filename}</span>`;
                 tab.addEventListener('click', () => switchToFile(filename));
                 codeTabs.appendChild(tab);
             });
@@ -941,6 +994,21 @@
             
             // Display content
             displayFileContent(filename, generatedFiles[filename]);
+        }
+        
+        // Get file icon based on extension
+        function getFileIcon(filename) {
+            const ext = filename.split('.').pop().toLowerCase();
+            const icons = {
+                'js': '🟨',
+                'json': '📋',
+                'ts': '🔷',
+                'html': '🌐',
+                'css': '🎨',
+                'py': '🐍',
+                'md': '📝'
+            };
+            return icons[ext] || '📄';
         }
         
         // Display file content with syntax highlighting
