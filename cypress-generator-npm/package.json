@@ -1,0 +1,31 @@
+{
+  "name": "cypress-generator",
+  "version": "1.0.1",
+  "description": "A Flask-based Cypress test script generator accessible via npm.",
+  "main": "bin/index.js",
+  "bin": {
+    "cypress-generator": "bin/cypress-generator.js"
+  },
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js",
+    "start": "node cypress-generator-npmbin/index.js"
+  },
+  "keywords": [
+    "cypress",
+    "flask",
+    "testing",
+    "automation",
+    "qa",
+    "python"
+  ],
+  "author": "Thirlo Fredericks",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thirlofredericks/cypress-generator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/thirlofredericks/cypress-generator/issues"
+  },
+  "homepage": "https://github.com/thirlofredericks/cypress-generator#readme"
+}
