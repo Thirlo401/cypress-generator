@@ -1,6 +1,6 @@
 {
   "name": "cypress-generator",
-  "version": "1.0.9",
+  "version": "1.0.14",
   "description": "A Flask-based Cypress test script generator accessible via npm.",
   "main": "bin/index.js",
   "bin": {
@@ -9,6 +9,8 @@
   "scripts": {
     "postinstall": "node scripts/postinstall.js",
     "start": "node index.js",
+    "server": "python run_server.py",
+    "dev": "python run_server.py",
     "install-deps": "node scripts/postinstall.js",
     "install-dependencies": "node scripts/postinstall.js",
     "setup": "node scripts/postinstall.js"
@@ -44,6 +46,6 @@
   },
   "homepage": "https://github.com/Thirlo401/cypress-generator#readme",
   "dependencies": {
-    "cypress-generator": "^1.0.9"
+    "cypress-generator": "^1.0.13"
   }
 }

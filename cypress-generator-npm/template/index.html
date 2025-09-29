@@ -298,158 +298,6 @@
             background: #4ec9b0;
         }
         
-        /* Code Viewer Styles */
-        .code-viewer {
-            background: #1e1e1e;
-            border: 1px solid #3c3c3c;
-            border-radius: 4px;
-            margin-top: 1rem;
-            overflow: hidden;
-        }
-        
-        .code-header {
-            background: #2d2d30;
-            padding: 0.75rem 1rem;
-            border-bottom: 1px solid #3c3c3c;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .code-title {
-            color: #d4d4d4;
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-        
-        .code-actions {
-            display: flex;
-            gap: 0.5rem;
-        }
-        
-        .code-btn {
-            background: #007acc;
-            color: #ffffff;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-family: inherit;
-        }
-        
-        .code-btn:hover {
-            background: #005a9e;
-        }
-        
-        .code-btn.secondary {
-            background: #3c3c3c;
-            color: #d4d4d4;
-        }
-        
-        .code-btn.secondary:hover {
-            background: #4a4a4a;
-        }
-        
-        .code-content {
-            background: #1e1e1e;
-            padding: 1rem;
-            overflow-x: auto;
-            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Source Code Pro', monospace;
-            font-size: 0.85rem;
-            line-height: 1.5;
-            color: #d4d4d4;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-        }
-        
-        .code-content .keyword {
-            color: #569cd6;
-        }
-        
-        .code-content .string {
-            color: #ce9178;
-        }
-        
-        .code-content .comment {
-            color: #6a9955;
-        }
-        
-        .code-content .function {
-            color: #dcdcaa;
-        }
-        
-        .code-content .number {
-            color: #b5cea8;
-        }
-        
-        .code-content .boolean {
-            color: #569cd6;
-        }
-        
-        .code-tabs {
-            display: flex;
-            background: #2d2d30;
-            border-bottom: 1px solid #3c3c3c;
-        }
-        
-        .code-tab {
-            padding: 0.75rem 1rem;
-            background: #2d2d30;
-            border: none;
-            color: #d4d4d4;
-            cursor: pointer;
-            font-size: 0.85rem;
-            border-right: 1px solid #3c3c3c;
-            transition: all 0.2s ease;
-        }
-        
-        .code-tab.active {
-            background: #1e1e1e;
-            color: #ffffff;
-        }
-        
-        .code-tab:hover {
-            background: #3c3c3c;
-        }
-        
-        .file-tree {
-            background: #252526;
-            border-right: 1px solid #3c3c3c;
-            padding: 1rem;
-            min-width: 200px;
-        }
-        
-        .file-item {
-            padding: 0.5rem;
-            cursor: pointer;
-            border-radius: 4px;
-            margin-bottom: 0.25rem;
-            transition: all 0.2s ease;
-            color: #d4d4d4;
-            font-size: 0.85rem;
-        }
-        
-        .file-item:hover {
-            background: #3c3c3c;
-        }
-        
-        .file-item.active {
-            background: #094771;
-            color: #ffffff;
-        }
-        
-        .file-icon {
-            margin-right: 0.5rem;
-        }
-        
-        .code-panel {
-            display: grid;
-            grid-template-columns: 200px 1fr;
-            min-height: 400px;
-        }
-        
         .toast {
             position: fixed;
             top: 20px;
@@ -485,14 +333,6 @@
             .sidebar {
                 position: static;
                 order: 2;
-            }
-            
-            .code-panel {
-                grid-template-columns: 1fr;
-            }
-            
-            .file-tree {
-                display: none;
             }
         }
     </style>
@@ -534,32 +374,6 @@
                     </form>
                     
                     <div id="result" style="display: none;"></div>
-                    
-                    <!-- Code Viewer -->
-                    <div id="code-viewer" class="code-viewer" style="display: none;">
-                        <div class="code-header">
-                            <div class="code-title">Generated Test Files</div>
-                            <div class="code-actions">
-                                <button class="code-btn secondary" id="copyAllBtn">Copy All</button>
-                                <button class="code-btn" id="downloadAllBtn">Download All</button>
-                            </div>
-                        </div>
-                        
-                        <div class="code-panel">
-                            <div class="file-tree" id="file-tree">
-                                <!-- Files will be populated here -->
-                            </div>
-                            
-                            <div class="code-content-container">
-                                <div class="code-tabs" id="code-tabs">
-                                    <!-- Tabs will be populated here -->
-                                </div>
-                                <div class="code-content" id="code-content">
-                                    <!-- Code will be displayed here -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 
                 <!-- Features Panel -->
@@ -712,22 +526,10 @@
                                 <li>${data.fixture_filename} - Test fixtures</li>
                             </ul>
                             <p><strong>AI Enhanced:</strong> ${data.ai_enhanced ? 'Yes' : 'No'}</p>
+                            <p><strong>Files saved to:</strong> generated_scripts/ folder</p>
                         </div>
                     `;
                     statusText.textContent = 'Success';
-                    
-                    // Display code viewer with generated files
-                    if (data.generated_files) {
-                        displayCodeViewer(data.generated_files);
-                    } else {
-                        // Fallback: create mock files for demonstration
-                        const mockFiles = {
-                            [data.filename]: data.test_content || '// Generated test content would appear here',
-                            [data.page_filename]: data.page_content || '// Generated page object would appear here',
-                            [data.fixture_filename]: data.fixture_content || '// Generated fixtures would appear here'
-                        };
-                        displayCodeViewer(mockFiles);
-                    }
                 } else {
                     result.innerHTML = `
                         <div class="result error">
@@ -781,42 +583,6 @@
             document.getElementById('url').focus();
         });
         
-        // Code Viewer Functionality
-        let generatedFiles = {};
-        let currentFile = null;
-        
-        // Syntax highlighting function
-        function highlightCode(code, language = 'javascript') {
-            const keywords = ['describe', 'it', 'beforeEach', 'afterEach', 'cy', 'expect', 'should', 'visit', 'get', 'click', 'type', 'select', 'check', 'uncheck', 'clear', 'submit', 'contains', 'have', 'be', 'exist', 'visible', 'enabled', 'disabled', 'checked', 'selected', 'focused', 'value', 'text', 'attr', 'class', 'id', 'data', 'window', 'document', 'location', 'navigate', 'reload', 'go', 'back', 'forward', 'url', 'title', 'viewport', 'wait', 'timeout', 'retry', 'then', 'and', 'or', 'not', 'each', 'within', 'wrap', 'as', 'alias', 'intercept', 'route', 'request', 'response', 'fixture', 'task', 'command', 'query', 'end', 'debug', 'pause', 'log', 'screenshot', 'video', 'session', 'cookies', 'localStorage', 'sessionStorage', 'clear', 'set', 'get', 'remove', 'keys', 'values', 'entries', 'length', 'size', 'empty', 'null', 'undefined', 'true', 'false', 'function', 'const', 'let', 'var', 'if', 'else', 'for', 'while', 'do', 'switch', 'case', 'default', 'break', 'continue', 'return', 'throw', 'try', 'catch', 'finally', 'new', 'this', 'super', 'extends', 'class', 'import', 'export', 'from', 'default', 'async', 'await', 'Promise', 'resolve', 'reject', 'then', 'catch', 'finally'];
-            
-            const strings = /(["'`])(?:(?!\1)[^\\]|\\.)*\1/g;
-            const comments = /\/\*[\s\S]*?\*\/|\/\/.*$/gm;
-            const numbers = /\b\d+(\.\d+)?\b/g;
-            const functions = /\b\w+(?=\s*\()/g;
-            
-            let highlighted = code;
-            
-            // Highlight strings
-            highlighted = highlighted.replace(strings, '<span class="string">$&</span>');
-            
-            // Highlight comments
-            highlighted = highlighted.replace(comments, '<span class="comment">$&</span>');
-            
-            // Highlight numbers
-            highlighted = highlighted.replace(numbers, '<span class="number">$&</span>');
-            
-            // Highlight functions
-            highlighted = highlighted.replace(functions, '<span class="function">$&</span>');
-            
-            // Highlight keywords
-            keywords.forEach(keyword => {
-                const regex = new RegExp(`\\b${keyword}\\b`, 'g');
-                highlighted = highlighted.replace(regex, `<span class="keyword">${keyword}</span>`);
-            });
-            
-            return highlighted;
-        }
-        
         // Show toast notification
         function showToast(message, type = 'success') {
             const toast = document.getElementById('toast');
@@ -828,143 +594,6 @@
                 toast.classList.remove('show');
             }, 3000);
         }
-        
-        // Copy text to clipboard
-        async function copyToClipboard(text) {
-            try {
-                await navigator.clipboard.writeText(text);
-                showToast('Copied to clipboard!', 'success');
-            } catch (err) {
-                // Fallback for older browsers
-                const textArea = document.createElement('textarea');
-                textArea.value = text;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-                showToast('Copied to clipboard!', 'success');
-            }
-        }
-        
-        // Download file
-        function downloadFile(filename, content, type = 'text/javascript') {
-            const blob = new Blob([content], { type });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = filename;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            showToast(`Downloaded ${filename}`, 'success');
-        }
-        
-        // Download all files as ZIP
-        function downloadAllFiles() {
-            // For now, download files individually
-            // In a real implementation, you'd use a library like JSZip
-            Object.entries(generatedFiles).forEach(([filename, content]) => {
-                downloadFile(filename, content);
-            });
-            showToast('All files downloaded!', 'success');
-        }
-        
-        // Copy all files
-        function copyAllFiles() {
-            let allContent = '';
-            Object.entries(generatedFiles).forEach(([filename, content]) => {
-                allContent += `// ${filename}\n${content}\n\n`;
-            });
-            copyToClipboard(allContent);
-        }
-        
-        // Display code in viewer
-        function displayCodeViewer(files) {
-            generatedFiles = files;
-            const codeViewer = document.getElementById('code-viewer');
-            const fileTree = document.getElementById('file-tree');
-            const codeTabs = document.getElementById('code-tabs');
-            
-            // Show code viewer
-            codeViewer.style.display = 'block';
-            
-            // Clear previous content
-            fileTree.innerHTML = '';
-            codeTabs.innerHTML = '';
-            
-            // Populate file tree and tabs
-            Object.keys(files).forEach((filename, index) => {
-                const isActive = index === 0;
-                
-                // File tree item
-                const fileItem = document.createElement('div');
-                fileItem.className = `file-item ${isActive ? 'active' : ''}`;
-                fileItem.innerHTML = `<span class="file-icon">📄</span>${filename}`;
-                fileItem.addEventListener('click', () => switchToFile(filename));
-                fileTree.appendChild(fileItem);
-                
-                // Tab
-                const tab = document.createElement('button');
-                tab.className = `code-tab ${isActive ? 'active' : ''}`;
-                tab.textContent = filename;
-                tab.addEventListener('click', () => switchToFile(filename));
-                codeTabs.appendChild(tab);
-            });
-            
-            // Set first file as active
-            if (Object.keys(files).length > 0) {
-                currentFile = Object.keys(files)[0];
-                displayFileContent(currentFile, files[currentFile]);
-            }
-        }
-        
-        // Switch to specific file
-        function switchToFile(filename) {
-            currentFile = filename;
-            
-            // Update active states
-            document.querySelectorAll('.file-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            document.querySelectorAll('.code-tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            // Set active file
-            const fileItems = document.querySelectorAll('.file-item');
-            const tabs = document.querySelectorAll('.code-tab');
-            const fileIndex = Object.keys(generatedFiles).indexOf(filename);
-            
-            if (fileItems[fileIndex]) fileItems[fileIndex].classList.add('active');
-            if (tabs[fileIndex]) tabs[fileIndex].classList.add('active');
-            
-            // Display content
-            displayFileContent(filename, generatedFiles[filename]);
-        }
-        
-        // Display file content with syntax highlighting
-        function displayFileContent(filename, content) {
-            const codeContent = document.getElementById('code-content');
-            const highlighted = highlightCode(content);
-            codeContent.innerHTML = highlighted;
-        }
-        
-        // Event listeners for code viewer
-        document.getElementById('copyAllBtn').addEventListener('click', copyAllFiles);
-        document.getElementById('downloadAllBtn').addEventListener('click', downloadAllFiles);
-        
-        // Add copy button for individual files
-        document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('code-content')) {
-                // Add copy button on right-click or double-click
-                if (e.detail === 2) { // Double click
-                    if (currentFile && generatedFiles[currentFile]) {
-                        copyToClipboard(generatedFiles[currentFile]);
-                    }
-                }
-            }
-        });
     </script>
 </body>
 </html>
