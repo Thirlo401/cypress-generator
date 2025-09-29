@@ -3,31 +3,51 @@ const path = require("path");
 const fs = require("fs");
 
 const isWindows = process.platform === "win32";
-const projectRoot = __dirname; // Assumes run from scripts/, but adjust if needed; during postinstall, cwd is root
-const venvPath = path.join(projectRoot, "..", "venv"); // Up one level to root
-const binDir = isWindows ? "Scripts" : "bin";
-const exe = isWindows ? ".exe" : "";
+const projectRoot = path.join(__dirname, ".."); // NPM package directory
 const pythonCmd = isWindows ? "python" : "python3";
 
-console.log("📦 Setting up Python environment...");
+console.log("📦 Setting up Cypress Generator...");
+console.log("🔍 Project root:", projectRoot);
 
-// Ensure venv exists
-if (!fs.existsSync(venvPath)) {
-  spawnSync(pythonCmd, ["-m", "venv", "venv"], { cwd: projectRoot, stdio: "inherit" });
+// Check if Python is available
+const pythonCheck = spawnSync(pythonCmd, ["--version"], { stdio: "pipe" });
+if (pythonCheck.error) {
+  console.log("⚠️  Python not found. Please install Python 3.8+ to use this package.");
+  console.log("   You can install dependencies manually:");
+  console.log("   pip install flask playwright openai");
+  console.log("   playwright install");
+  process.exit(0);
 }
 
-// Install Python dependencies inside venv
-const requirements = path.join(projectRoot, "..", "requirements.txt");
+console.log("✅ Python found:", pythonCheck.stdout.toString().trim());
+
+// Install Python dependencies
+const requirements = path.join(projectRoot, "requirements.txt");
 if (fs.existsSync(requirements)) {
-  const pipPath = path.join(venvPath, binDir, `pip${exe}`);
-  spawnSync(pipPath, ["install", "-r", "requirements.txt"], {
+  console.log("📦 Installing Python dependencies...");
+  const installResult = spawnSync(pythonCmd, ["-m", "pip", "install", "-r", "requirements.txt"], {
     cwd: projectRoot,
     stdio: "inherit"
   });
+  
+  if (installResult.error) {
+    console.log("⚠️  Failed to install Python dependencies automatically.");
+    console.log("   Please install manually: pip install flask playwright openai");
+  }
 }
 
 // Install Playwright browsers
-const playwrightPath = path.join(venvPath, binDir, `playwright${exe}`);
-spawnSync(playwrightPath, ["install"], { cwd: projectRoot, stdio: "inherit" });
+console.log("🌐 Installing Playwright browsers...");
+const playwrightResult = spawnSync(pythonCmd, ["-m", "playwright", "install"], {
+  cwd: projectRoot,
+  stdio: "inherit"
+});
 
-console.log("✅ Python environment ready!");
+if (playwrightResult.error) {
+  console.log("⚠️  Failed to install Playwright browsers automatically.");
+  console.log("   Please install manually: playwright install");
+}
+
+console.log("✅ Cypress Generator setup complete!");
+console.log("🚀 Run 'cypress-generator' to start the server");
+console.log("📖 Make sure to set your OPENAI_API_KEY environment variable");

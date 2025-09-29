@@ -1,6 +1,6 @@
 {
   "name": "cypress-generator",
-  "version": "1.0.4",
+  "version": "1.0.7",
   "description": "A Flask-based Cypress test script generator accessible via npm.",
   "main": "bin/index.js",
   "bin": {
@@ -8,8 +8,20 @@
   },
   "scripts": {
     "postinstall": "node scripts/postinstall.js",
-    "start": "node cypress-generator-npmbin/index.js"
+    "start": "node index.js"
   },
+  "files": [
+    "app.py",
+    "requirements.txt",
+    "setup.py",
+    "template/",
+    "static/",
+    "bin/",
+    "scripts/",
+    "index.js",
+    "README.md",
+    ".env.example"
+  ],
   "keywords": [
     "cypress",
     "flask",

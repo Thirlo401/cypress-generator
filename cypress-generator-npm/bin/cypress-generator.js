@@ -15,33 +15,37 @@ function startFlaskServer() {
     console.log('📖 API Documentation: http://localhost:5000/api/test_types');
     console.log('');
     
-    // Get the path to the parent directory (where the Flask app is)
-    const parentDir = path.join(__dirname, '..', '..');
+    // Get the path to the NPM package directory (where the Flask app is)
+    const packageDir = path.join(__dirname, '..');
     const pythonPath = process.platform === 'win32' ? 'python' : 'python3';
     
-    // Activate virtual environment and run Flask app
-    const activateScript = process.platform === 'win32' 
-        ? path.join(parentDir, 'npm', 'Scripts', 'activate.bat')
-        : path.join(parentDir, 'npm', 'bin', 'activate');
+    // Check if app.py exists in the package directory
+    const appPath = path.join(packageDir, 'app.py');
+    const fs = require('fs');
     
-    const appPath = path.join(parentDir, 'app.py');
+    if (!fs.existsSync(appPath)) {
+        console.error('❌ app.py not found at', appPath);
+        console.error('   Ensure app.py is in the project root alongside package.json.');
+        process.exit(1);
+    }
+    
+    console.log('🔍 Project root:', packageDir);
+    console.log('🔍 App path:', appPath);
     
     console.log(`🐍 Using Python: ${pythonPath}`);
     console.log(`📁 App path: ${appPath}`);
-    console.log(`🔧 Virtual env: ${path.join(parentDir, 'npm')}`);
     console.log('');
     
     // Set environment variables
     const env = {
         ...process.env,
-        VIRTUAL_ENV: path.join(parentDir, 'npm'),
-        PATH: process.platform === 'win32' 
-            ? `${path.join(parentDir, 'npm', 'Scripts')};${process.env.PATH}`
-            : `${path.join(parentDir, 'npm', 'bin')}:${process.env.PATH}`
+        FLASK_APP: appPath,
+        FLASK_ENV: 'development',
+        PORT: '5000'
     };
     
     const flaskProcess = spawn(pythonPath, [appPath], {
-        cwd: parentDir,
+        cwd: packageDir,
         env: env,
         stdio: 'inherit'
     });
@@ -50,9 +54,10 @@ function startFlaskServer() {
         console.error('❌ Failed to start Flask server:', err.message);
         console.log('');
         console.log('💡 Troubleshooting:');
-        console.log('   1. Make sure Python is installed');
-        console.log('   2. Run: npm run install-deps');
-        console.log('   3. Check if virtual environment exists');
+        console.log('   1. Make sure Python 3.8+ is installed');
+        console.log('   2. Install dependencies: pip install flask playwright openai');
+        console.log('   3. Install Playwright browsers: playwright install');
+        console.log('   4. Set OPENAI_API_KEY environment variable');
         process.exit(1);
     });
     
